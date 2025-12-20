@@ -11,27 +11,22 @@ void solve() {
         for(int i = 1; i <= k; i++) cout << n << " ";
         cout << "\n";
     } else {
-        long long a = 0ll, b = 0ll;
-        int p = 31 - __builtin_clz(n);
-        a = 1ll << p;
-        int shift = p - 1;
-        bool flag = 0;
-        while(shift >= 0) {
-            if(n & (1ll << shift)) {
-                flag = 1;
-                b += 1 << shift;
-            } else {
-                if(flag) {
-                    a += 1 << shift;
-                    b += 1 << shift;
+        vi a(k);
+        int loose = 0;
+        for(int i = 30; i >= 0; i--) {
+            if(n >> i & 1) {
+                if(loose == k) {
+                    for(int j = 0; j < k - 1; j++) a[j] += 1 << i;
+                } else {
+                    for(int j = 0; j < k; j++) if(j != loose) a[j] += 1 << i;
+                    loose++;
                 }
+            } else {
+                if(loose & 1) for(int j = 0; j < loose - 1; j++) a[j] += 1 << i;
+                else for(int j = 0; j < loose; j++) a[j] += 1 << i;
             }
-            shift--;
         }
-        cout << a << " " << b << " ";
-        for(int i = 3; i <= k; i++) {
-            cout << n << " ";
-        }
+        for(int i = 0; i < k; i++) cout << a[i] << " ";
         cout << "\n";
     }
 }
