@@ -2,6 +2,5 @@
 .cph
 .vscode
 *.bin
-# optional if you ever add temp IO files
 input.txt
 output.txt
